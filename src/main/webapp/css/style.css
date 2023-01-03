@@ -1,0 +1,39 @@
+.custom-bg{
+	background: #805acb !important;
+}
+
+.login-bg{
+	background: #805acb !important;
+}
+
+.bg{
+	background: #b388ff !important;
+}
+
+
+
+.admin .card{
+	
+	border:1px  solid #f3e5f5;
+	
+	
+}
+
+.admin .card:hover{
+	
+	background:#f3e5f5 ;
+	cursor:pointer;
+	
+	
+}
+
+.color{
+	color:red;
+}
+
+
+.center {
+                text-align: center;
+                width: 100%;
+            }
+            

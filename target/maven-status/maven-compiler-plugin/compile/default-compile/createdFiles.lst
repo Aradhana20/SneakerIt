@@ -1,0 +1,10 @@
+com\servlet\ProductOperationServlet.class
+source_package\FactoryProvider.class
+com\entities\Category.class
+com\dao\UserDao.class
+com\servlet\LogoutServlet.class
+com\entities\Product.class
+com\servlet\LoginServlet.class
+com\entities\User.class
+com\servlet\RegisterServlet.class
+com\dao\CategoryDao.class
