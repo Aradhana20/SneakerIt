@@ -1,6 +1,7 @@
 package com.servlet;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
@@ -11,21 +12,26 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.http.codec.multipart.Part;
 
 import com.dao.CategoryDao;
+import com.dao.ProductDao;
 import com.dao.UserDao;
 import com.entities.Category;
 import com.entities.Product;
 import com.entities.User;
 
 import source_package.FactoryProvider;
-
+import javax.servlet.annotation.MultipartConfig;
 
 
 /**
  * Servlet implementation class RegisterServlet
  */
+
+@MultipartConfig
 @WebServlet("/ProductOperationServlet")
 public class ProductOperationServlet extends HttpServlet{
 
@@ -93,16 +99,41 @@ public class ProductOperationServlet extends HttpServlet{
 					
 					String Ptitle =request.getParameter("ProductName");
 					String Pdescription =request.getParameter("Productdesc");
-					String Pphoto =request.getParameter("Productphoto");
-					//Integer Pprice =request.getParameter("Productprice");
-					String Pdiscount =request.getParameter("Productdiscount");
-					String Pquantity =request.getParameter("Productquantity");
+					
+				    int Pprice =Integer.parseInt(request.getParameter("Productprice"));
+				    int Pdiscount =Integer.parseInt(request.getParameter("Productdiscount"));
+				    int Pquantity =Integer.parseInt(request.getParameter("Productquantity"));
+				    int CId =Integer.parseInt(request.getParameter("categoryId"));
+					
+				    //to save image
+					javax.servlet.http.Part part = request.getPart("Productphoto");
+					
 					
 					Product product= new Product();
-					product.setProductName(Pquantity);
 					
+					product.setProductName(Ptitle);
 					product.setProductDesc(Pdescription);
-					//product.setProductPrice(Pprice);
+					product.setProductPrice(Pprice);
+					product.setProductDiscount(Pdiscount);
+					product.setProductQuantity(Pquantity);
+					
+					product.setProductphoto(part.getSubmittedFileName());
+					
+					//For categorg create a function , to get category by Id
+					
+					CategoryDao cdao =  new CategoryDao(FactoryProvider.getFactory());
+					Category category = cdao.getCategoryById(CId);
+					
+					product.setCategory(category);
+					
+					//product save
+					
+					ProductDao pdao= new ProductDao(FactoryProvider.getFactory());
+					pdao.saveProduct(product);
+					
+					out.println("Product saved in DB");
+					//close the stream
+					out.close();
 			
 				}
 				
